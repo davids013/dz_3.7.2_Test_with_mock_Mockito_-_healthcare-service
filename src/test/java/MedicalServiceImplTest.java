@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import ru.netology.patient.entity.BloodPressure;
 import ru.netology.patient.entity.HealthInfo;
 import ru.netology.patient.entity.PatientInfo;
@@ -63,7 +64,6 @@ public class MedicalServiceImplTest {
         when(healthInfo.getNormalTemperature()).thenReturn(normalTemperature);
         when(patientInfoRepository.getById(PATIENT_ID)).thenReturn(patientInfo);
 
-
         final MedicalService medicalService = new MedicalServiceImpl(patientInfoRepository, sendAlertService);
         medicalService.checkTemperature(PATIENT_ID, patientTemperature);
         final String result = output.toString();
@@ -73,7 +73,7 @@ public class MedicalServiceImplTest {
     @ParameterizedTest
     @ValueSource(ints = {100, 120, 150, 200})
     void checkBloodPressureTest(int param) {
-        final BloodPressure patientPressure = new BloodPressure(param, 90);
+        final BloodPressure patientPressure = new BloodPressure(param, 80);
         final BloodPressure bloodPressure = new BloodPressure(120, 80);
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
